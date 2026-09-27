@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LaunchAgent template for a WORKER's ggml-rpc-server.
+  Install on each worker: replace __USER__ and __REPO_DIR__, copy to
+  ~/Library/LaunchAgents/, then load with launchctl load -w.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.llamacluster.worker</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/__USER__/__REPO_DIR__/scripts/start-worker.sh</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/llama_worker.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/llama_worker.log</string>
+</dict>
+</plist>

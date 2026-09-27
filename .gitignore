@@ -1,0 +1,11 @@
+# local config (copy .env.example → .env and fill in)
+.env
+*.local
+
+# build artifacts
+build/
+*.gguf
+*.log
+
+# macOS
+.DS_Store

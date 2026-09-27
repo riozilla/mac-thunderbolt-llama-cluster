@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LaunchAgent template for the head-node llama-server.
+  Install: replace __USER__ and __REPO_DIR__, copy to ~/Library/LaunchAgents/,
+  then: launchctl load -w ~/Library/LaunchAgents/com.llamacluster.server.plist
+  launchd is the sole lifecycle owner — do not also start the server by hand.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.llamacluster.server</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/__USER__/__REPO_DIR__/scripts/start-server.sh</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/llama_server.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/llama_server.log</string>
+</dict>
+</plist>
