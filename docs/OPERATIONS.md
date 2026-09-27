@@ -4,20 +4,18 @@ Hard-won lessons from running a sharded llama.cpp cluster on Apple Silicon.
 
 ## Transport: TCP vs RDMA
 
-The scripts default to **TCP** (`GGML_RPC_NO_RDMA=1`). It is slower than RDMA but
-does not fall over.
+The cluster runs over **either** TCP or RDMA — both are supported, with different
+performance/reliability tradeoffs. TCP (`USE_RDMA=0`) is the portable default;
+RDMA over Thunderbolt is lower-latency but demands a direct-link star topology and
+can wedge a worker at 100% CPU until reboot after an unclean teardown.
 
-RDMA over Thunderbolt is faster but has two failure modes worth knowing before
-you enable `USE_RDMA=1`:
+Full comparison, requirements for each, topology-verification commands, and a
+benchmarking recipe: **[TRANSPORT.md](TRANSPORT.md)**.
 
-- **Wedges after a dirty client teardown.** If the head node dies mid-request,
-  workers can peg one CPU core at 100% with 0 memory movement and stay stuck
-  until rebooted. Restart (or reboot) workers after any unclean shutdown.
-- **Deadlocks on multi-hop topologies.** Only direct links between each worker
-  and the head node work. Keep the star topology.
-
-If you enable RDMA, use a direct-link star, set `RDMA_DEVICE` to the Thunderbolt
-interface on multi-port workers, and be ready to reboot after crashes.
+Two things to internalize before enabling RDMA: it **cannot** run over an SSH
+tunnel, VPN, or any routed/multi-hop path (it deadlocks), and it needs the head
+node to have a real Thunderbolt-IP interface per worker. If your cabling isn't a
+clean direct star, stay on TCP.
 
 ## Multi-shard models
 

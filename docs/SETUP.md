@@ -102,4 +102,5 @@ Copy the templates in `systemd/launchd/`, replace `__USER__` and `__REPO_DIR__`,
 drop them in `~/Library/LaunchAgents/`, and `launchctl load -w` them. Let
 launchd be the *sole* lifecycle owner — don't also start processes by hand.
 
-See `docs/OPERATIONS.md` for transport tradeoffs, warm-keeping, and debugging.
+See `docs/OPERATIONS.md` for warm-keeping and debugging, and
+`docs/TRANSPORT.md` for the full TCP-vs-RDMA comparison and how to choose.

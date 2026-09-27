@@ -47,9 +47,11 @@ Running llama.cpp RPC across Macs works, but a few things will waste your
 afternoon if you don't know them. They're baked into the scripts and written up
 in **[docs/OPERATIONS.md](docs/OPERATIONS.md)**:
 
-- **TCP by default.** RDMA over Thunderbolt is faster but wedges after a dirty
-  client teardown (worker stuck at 100% CPU until reboot) and deadlocks on
-  multi-hop topologies. TCP + a star topology is the reliable default.
+- **Runs over TCP _or_ RDMA — your choice.** TCP (the default) is portable and
+  crash-tolerant and works over any IP path including SSH tunnels; RDMA over
+  Thunderbolt is lower-latency but requires a direct-link star and can wedge a
+  worker until reboot. Full side-by-side, requirements for each, and a
+  benchmarking recipe in **[docs/TRANSPORT.md](docs/TRANSPORT.md)**.
 - **Never concatenate multi-shard GGUFs.** Point at shard 1
   (`...00001-of-000NN.gguf`); llama.cpp finds the siblings. Concatenating loads a
   garbage header and every later error looks like a bogus network failure.
@@ -69,7 +71,7 @@ scripts/
   tunnel-worker.sh    optional SSH port-forward for a worker's RPC port
   healthcheck.sh      probe the API (200 + status:ok only)
 systemd/launchd/      launchd templates to run at boot
-docs/                 SETUP.md, OPERATIONS.md
+docs/                 SETUP.md, OPERATIONS.md, TRANSPORT.md
 .env.example          all configuration (copy to .env)
 ```
 
