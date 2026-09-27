@@ -1,4 +1,4 @@
-# apple-rdma-llama-cluster
+# mac-thunderbolt-llama-cluster
 
 Serve large LLMs across multiple Apple Silicon Macs with
 [llama.cpp](https://github.com/ggml-org/llama.cpp)'s RPC backend over
@@ -24,8 +24,8 @@ hostnames, model paths) are pulled out into `.env`; the scripts are generic.
 ## Quick start
 
 ```bash
-git clone https://github.com/<you>/apple-rdma-llama-cluster
-cd apple-rdma-llama-cluster
+git clone https://github.com/<you>/mac-thunderbolt-llama-cluster
+cd mac-thunderbolt-llama-cluster
 cp .env.example .env          # edit for your machines
 
 # on every node:
